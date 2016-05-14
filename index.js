@@ -1,6 +1,6 @@
 'use strict'
 const m = require('markdownscript')
-const slugs = require('github-slugger')()
+const GithubSlugger = require('github-slugger')
 
 const HEADING = 'heading'
 const LIST = 'list'
@@ -40,92 +40,6 @@ function isOpeningHeading (node, depth, expression) {
 function isClosingHeading (node, depth) {
   return node && (depth && node.type === HEADING && node.depth <= depth ||
     node.type === 'markdownScript')
-}
-
-/**
- * Search a node for a location.
- *
- * @param {Node} root - Parent to search in.
- * @param {RegExp} expression - Heading-content to search
- *   for.
- * @param {number} maxDepth - Maximum-depth to include.
- * @return {Object} - Results.
- */
-function search (root, expression, maxDepth) {
-  let index = -1
-  let depth = null
-  let map = []
-  let headingIndex
-  let closingIndex
-
-  while (++index < root.children.length) {
-    const child = root.children[index]
-
-    if ([HEADING, 'markdownScript'].indexOf(child.type) === -1) {
-      continue
-    }
-
-    if (headingIndex && isClosingHeading(child, depth)) {
-      closingIndex = index
-      searchChildren(root.children.slice(index))
-      break
-    }
-
-    if (isOpeningHeading(child, depth, expression)) {
-      headingIndex = index + 1
-      depth = child.depth
-    }
-  }
-
-  function searchChildren (children) {
-    if (!children || !children.length) return
-
-    const child = children.shift()
-
-    if ([HEADING, 'markdownScript'].indexOf(child.type) === -1) {
-      return searchChildren(children)
-    }
-
-    if (child.type === 'markdownScript') {
-      return searchChildren(child.children.concat(children))
-    }
-
-    const value = toString(child)
-
-    if (value && child.depth <= maxDepth) {
-      map.push({
-        depth: child.depth,
-        value,
-        id: getId(child),
-      })
-    }
-
-    return searchChildren(children)
-  }
-
-  if (headingIndex) {
-    if (!closingIndex) {
-      closingIndex = root.children.length + 1
-    }
-
-    /*
-     * Remove current TOC.
-     */
-    root.children.splice(headingIndex, closingIndex - headingIndex)
-  }
-
-  return {
-    index: headingIndex || null,
-    map,
-  }
-}
-
-function getId (child) {
-  if (child.children && child.children[0].type === 'html') {
-    const match = child.children[0].value.match(/name="([a-zA-Z0-9\-_]+)"/)
-    if (match) return match[1]
-  }
-  return slugs.slug(toString(child))
 }
 
 /**
@@ -266,7 +180,7 @@ function toString (node) {
 }
 
 module.exports = (mos, md) => {
-  var settings = md.tocOptions || {}
+  var settings = md.options || {}
   var heading = toExpression(settings.heading || DEFAULT_HEADING)
   var depth = settings.maxDepth || 6
 
@@ -289,6 +203,94 @@ module.exports = (mos, md) => {
 
     return next.applySame()
   })
+
+  /**
+   * Search a node for a location.
+   *
+   * @param {Node} root - Parent to search in.
+   * @param {RegExp} expression - Heading-content to search
+   *   for.
+   * @param {number} maxDepth - Maximum-depth to include.
+   * @return {Object} - Results.
+   */
+  function search (root, expression, maxDepth) {
+    let index = -1
+    let depth = null
+    let map = []
+    let headingIndex
+    let closingIndex
+
+    while (++index < root.children.length) {
+      const child = root.children[index]
+
+      if ([HEADING, 'markdownScript'].indexOf(child.type) === -1) {
+        continue
+      }
+
+      if (headingIndex && isClosingHeading(child, depth)) {
+        closingIndex = index
+        searchChildren(root.children.slice(index))
+        break
+      }
+
+      if (isOpeningHeading(child, depth, expression)) {
+        headingIndex = index + 1
+        depth = child.depth
+      }
+    }
+
+    function searchChildren (children) {
+      if (!children || !children.length) return
+
+      const child = children.shift()
+
+      if ([HEADING, 'markdownScript'].indexOf(child.type) === -1) {
+        return searchChildren(children)
+      }
+
+      if (child.type === 'markdownScript') {
+        return searchChildren(child.children.concat(children))
+      }
+
+      const value = toString(child)
+
+      if (value && child.depth <= maxDepth) {
+        map.push({
+          depth: child.depth,
+          value,
+          id: getId(child),
+        })
+      }
+
+      return searchChildren(children)
+    }
+
+    if (headingIndex) {
+      if (!closingIndex) {
+        closingIndex = root.children.length + 1
+      }
+
+      /*
+       * Remove current TOC.
+       */
+      root.children.splice(headingIndex, closingIndex - headingIndex)
+    }
+
+    return {
+      index: headingIndex || null,
+      map,
+    }
+  }
+
+  const slugs = new GithubSlugger()
+
+  function getId (child) {
+    if (child.children && child.children[0].type === 'html') {
+      const match = child.children[0].value.match(/name="([a-zA-Z0-9\-_]+)"/)
+      if (match) return match[1]
+    }
+    return slugs.slug(toString(child))
+  }
 }
 
 module.exports.attributes = {
