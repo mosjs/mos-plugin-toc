@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zkochan/mos-plugin-toc"
+    "url": "https://github.com/mosjs/mos-plugin-toc"
   },
   "keywords": [
     "mos-plugin",
@@ -33,9 +33,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zkochan/mos-plugin-toc/issues"
+    "url": "https://github.com/mosjs/mos-plugin-toc/issues"
   },
-  "homepage": "https://github.com/zkochan/mos-plugin-toc#readme",
+  "homepage": "https://github.com/mosjs/mos-plugin-toc#readme",
   "dependencies": {
     "github-slugger": "^1.1.1",
     "markdownscript": "^1.1.0"

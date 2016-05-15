@@ -7,7 +7,7 @@
 <!--/@-->
 
 <!--@shields.flatSquare('npm', 'travis', 'coveralls')-->
-[![NPM version](https://img.shields.io/npm/v/mos-plugin-toc.svg?style=flat-square)](https://www.npmjs.com/package/mos-plugin-toc) [![Build status for master](https://img.shields.io/travis/zkochan/mos-plugin-toc/master.svg?style=flat-square)](https://travis-ci.org/zkochan/mos-plugin-toc) [![Test coverage for master](https://img.shields.io/coveralls/zkochan/mos-plugin-toc/master.svg?style=flat-square)](https://coveralls.io/r/zkochan/mos-plugin-toc?branch=master)
+[![NPM version](https://img.shields.io/npm/v/mos-plugin-toc.svg?style=flat-square)](https://www.npmjs.com/package/mos-plugin-toc) [![Build status for master](https://img.shields.io/travis/mosjs/mos-plugin-toc/master.svg?style=flat-square)](https://travis-ci.org/mosjs/mos-plugin-toc) [![Test coverage for master](https://img.shields.io/coveralls/mosjs/mos-plugin-toc/master.svg?style=flat-square)](https://coveralls.io/r/mosjs/mos-plugin-toc?branch=master)
 <!--/@-->
 
 <!--@installation()-->
@@ -33,7 +33,7 @@ const mosPluginToc = require('mos-plugin-toc')
 * * *
 
 <!--@dependencies({ shield: 'flat-square' })-->
-## <a name="dependencies">Dependencies</a> [![Dependency status for master](https://img.shields.io/david/zkochan/mos-plugin-toc/master.svg?style=flat-square)](https://david-dm.org/zkochan/mos-plugin-toc/master)
+## <a name="dependencies">Dependencies</a> [![Dependency status for master](https://img.shields.io/david/mosjs/mos-plugin-toc/master.svg?style=flat-square)](https://david-dm.org/mosjs/mos-plugin-toc/master)
 
 - [github-slugger](https://github.com/Flet/github-slugger): Generate a slug just like GitHub does for markdown headings.
 - [markdownscript](https://github.com/zkochan/markdownscript): Creates markdown Abstract Syntax Tree
@@ -41,7 +41,7 @@ const mosPluginToc = require('mos-plugin-toc')
 <!--/@-->
 
 <!--@devDependencies({ shield: 'flat-square' })-->
-## <a name="dev-dependencies">Dev Dependencies</a> [![devDependency status for master](https://img.shields.io/david/dev/zkochan/mos-plugin-toc/master.svg?style=flat-square)](https://david-dm.org/zkochan/mos-plugin-toc/master#info=devDependencies)
+## <a name="dev-dependencies">Dev Dependencies</a> [![devDependency status for master](https://img.shields.io/david/dev/mosjs/mos-plugin-toc/master.svg?style=flat-square)](https://david-dm.org/mosjs/mos-plugin-toc/master#info=devDependencies)
 
 - [chai](https://github.com/chaijs/chai): BDD/TDD assertion library for node.js and the browser. Test framework agnostic.
 - [cz-conventional-changelog](https://github.com/commitizen/cz-conventional-changelog): Commitizen adapter following the conventional-changelog format.
