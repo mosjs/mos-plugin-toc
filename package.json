@@ -18,7 +18,9 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "postcoveralls": "rm -rf ./coverage",
     "md": "mos -x=\"test/**/*.md\"",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "transpile": "babel src --out-dir dist",
+    "prepublish": "npm run transpile"
   },
   "repository": {
     "type": "git",
