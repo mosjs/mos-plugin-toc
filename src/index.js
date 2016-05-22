@@ -1,4 +1,3 @@
-'use strict'
 const m = require('markdownscript')
 const GithubSlugger = require('github-slugger')
 
@@ -179,7 +178,7 @@ function toString (node) {
     '').trim()
 }
 
-module.exports = (mos, md) => {
+export default function plugin (mos, md) {
   var settings = md.options || {}
   var heading = toExpression(settings.heading || DEFAULT_HEADING)
   var depth = settings.maxDepth || 6
@@ -293,6 +292,6 @@ module.exports = (mos, md) => {
   }
 }
 
-module.exports.attributes = {
-  pkg: require('./package.json'),
+plugin.attributes = {
+  pkg: require('../package.json'),
 }
